@@ -50,7 +50,7 @@ public class Billboard : MonoBehaviour
         switch (billboardType)
         {
             case BillboardType.LookAtCamera:
-                transform.LookAt(Camera.main.transform.position, Vector3.up);
+                transform.LookAt(Camera.main.transform/* .position, Vector3.up */);
                 break;
             case BillboardType.CameraForward:
                 transform.forward = Camera.main.transform.forward;
@@ -58,10 +58,11 @@ public class Billboard : MonoBehaviour
             default:
                 break;
         }
-        Vector3 rotation = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        /* Vector3 rotation = transform.rotation.eulerAngles;
         if (lockX) { rotation.x = originalRotation.x; }
         if (lockY) { rotation.y = originalRotation.y; }
-        if (lockZ) { rotation.z = originalRotation.z; }
+        if (lockZ) { rotation.z = originalRotation.z; } */
     }
     
     /* void SetSortingLayerBasedOnDistance()

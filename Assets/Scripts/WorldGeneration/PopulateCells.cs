@@ -59,6 +59,7 @@ public class PopulateCells : MonoBehaviour
             populateMain(cell);
             populateFront(cell);
         }
+
         finishedPopulatingCells?.Invoke();
     }
 
@@ -104,6 +105,18 @@ public class PopulateCells : MonoBehaviour
                 GameObject prefab = treePrefabTest[UnityEngine.Random.Range(0, treePrefabTest.Length)];
                 // Instantiate the prefab and make it a child of the specified child object
                 Instantiate(prefab, childTransform2);
+            }
+            else
+            {
+                Debug.LogWarning("Child object not found in " + cell.name);
+            }
+            Transform backObject = cell.transform.Find("BackObject");
+
+            if (backObject != null)
+            {
+                GameObject prefab = treePrefabTest[UnityEngine.Random.Range(0, treePrefabTest.Length)];
+                // Instantiate the prefab and make it a child of the specified child object
+                Instantiate(prefab, backObject);
             }
             else
             {

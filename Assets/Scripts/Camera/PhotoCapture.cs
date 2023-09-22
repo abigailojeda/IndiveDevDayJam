@@ -25,11 +25,11 @@ public class PhotoCapture : MonoBehaviour
 
     void Awake()
     {
-        playercontroller = FindObjectOfType<PlayerControler>();
+        /* playercontroller = FindObjectOfType<PlayerControler>();
         if (playercontroller == null)
         {
-            Debug.LogError("No se encontró el script PlayerControler.");
-        }
+            Debug.LogError("No se encontrï¿½ el script PlayerControler.");
+        } */
     }
 
     private void Start()
