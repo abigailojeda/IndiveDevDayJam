@@ -5,6 +5,8 @@ using UnityEngine;
 public class Billboard : MonoBehaviour
 {
     [SerializeField] private BillboardType billboardType;
+    private SpriteRenderer parentRenderer;
+    private SpriteRenderer childRenderer;
 
     [Header("Lock Rotation")]
     [SerializeField] private bool lockX;
@@ -20,6 +22,9 @@ public class Billboard : MonoBehaviour
     
     private void Awake() {
         originalRotation = transform.rotation.eulerAngles;
+    }
+    private void Start() {
+        parentRenderer = transform.GetComponentInChildren<SpriteRenderer>();
     }
     private void LateUpdate() {
         // Calculate the distance between the object and the player
@@ -45,7 +50,7 @@ public class Billboard : MonoBehaviour
 
     void billBoardObject()
     {
-        if(Vector3.Distance(transform.position, Camera.main.transform.position) > activationRadius) return;
+        /* if(Vector3.Distance(transform.position, Camera.main.transform.position) > activationRadius) return; */
 
         switch (billboardType)
         {
@@ -67,6 +72,7 @@ public class Billboard : MonoBehaviour
     
     /* void SetSortingLayerBasedOnDistance()
     {
+        if (gameObject.tag == "Target"){
         SpriteRenderer[] childRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         foreach (SpriteRenderer childRenderer in childRenderers)
@@ -84,5 +90,19 @@ public class Billboard : MonoBehaviour
                 childRenderer.sortingOrder = sortingOrder;
             }
         }
+        }
     } */
+
+    public void setSortingLayers(SpriteRenderer _childRenderer)
+    {
+        childRenderer = _childRenderer;
+        // Find the SpriteRenderer components for both the parent and child objects.
+        parentRenderer = transform.GetComponentInChildren<SpriteRenderer>();
+        // Ensure both SpriteRenderer components exist.
+        if (parentRenderer != null && childRenderer != null)
+        {
+            // Set the child's sorting order to be one greater than the parent's sorting order.
+            childRenderer.sortingOrder = parentRenderer.sortingOrder + 1;
+        }
+    }
 }

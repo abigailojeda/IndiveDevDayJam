@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -64,6 +65,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.LogWarning("Child object not found in " + nextWaypoint.name);
             }
+        } else {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Menu");
         }
     }
 }

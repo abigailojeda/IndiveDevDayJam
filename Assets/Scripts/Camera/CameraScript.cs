@@ -113,7 +113,6 @@ public class CameraScript : MonoBehaviour
         {
             // If the boxcast hits something, you can handle the hit object here
             GameObject collidedObj = hit.collider.gameObject.transform.parent.gameObject;
-            Debug.Log(collidedObj.name);
             if (collidedObj.tag == "target")
             {
                 anyValidHitDic[caster] = true;
