@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 1281527392111448563}
   - component: {fileID: 2347213370563855398}
   m_Layer: 0
-  m_Name: hongitorrinco
+  m_Name: honguitorrinco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

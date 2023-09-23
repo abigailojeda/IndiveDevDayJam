@@ -32,6 +32,7 @@ public class AlbumController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("STARTTTTTT");
         InitializeMenuAnimals();
 
         pages[currentPageIndex].SetActive(true);
@@ -92,7 +93,7 @@ public class AlbumController : MonoBehaviour
             menuAnimals.Add(new Animal("fungus5"));
             menuAnimals.Add(new Animal("escarabajo1"));
             menuAnimals.Add(new Animal("escarabajo2"));
-            menuAnimals.Add(new Animal("hongotirrinco"));
+            menuAnimals.Add(new Animal("honguitorrinco"));
 
             //PAGE3
             menuAnimals.Add(new Animal("unicornio"));
@@ -115,7 +116,7 @@ public class AlbumController : MonoBehaviour
             PlayerPrefs.SetInt("Initialized", 1);
             PlayerPrefs.Save();
   
-        }
+        } 
 
         LoadPhotographedObjects();
 
@@ -147,6 +148,7 @@ public class AlbumController : MonoBehaviour
 
     public void LoadPhotographedObjects()
     {
+        Debug.Log("SI QUE ENTROOOOOO");
         if (PlayerPrefs.HasKey("AnimalsData"))
         {
             string json = PlayerPrefs.GetString("AnimalsData");

@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         PopulateCells.finishedPopulatingCells -= teleportPlayer;
     }
 
+    
+
     void setPathArray()
     {
         if (gridGeneratorScript != null)
@@ -106,16 +108,37 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(photographedObjectsList);
         foreach (GameObject animalGameObject in photographedObjectsList)
         {
-            // Accede a los componentes o propiedades específicas del objeto GameObject
-            // Por ejemplo, puedes obtener el nombre del animal así:
+            
             string animalName = animalGameObject.name.Replace("(Clone)", "");
             animalNames.Add(animalName);
-            // Luego, puedes hacer lo que necesites con esta información
+      
             Debug.Log("Animal fotografiado: " + animalName);
         }
 
         updateAnimalsData(animalNames);
         SceneManager.LoadScene("Menu");
+
+    }
+
+    public void updateAlbum()
+    {
+
+
+        CameraScript cameraScript = FindObjectOfType<CameraScript>();
+        var photographedObjectsList = cameraScript.GetPhotographedObjectsList();
+        List<string> animalNames = new List<string>();
+
+        Debug.Log(photographedObjectsList);
+        foreach (GameObject animalGameObject in photographedObjectsList)
+        {
+
+            string animalName = animalGameObject.name.Replace("(Clone)", "");
+            animalNames.Add(animalName);
+
+            Debug.Log("Animal fotografiado: " + animalName);
+        }
+
+        updateAnimalsData(animalNames);
 
     }
 
