@@ -132,7 +132,14 @@ public class PopulateCreatures : MonoBehaviour
             if (listFrom == flyingInsecsPrefabs)
             {
                 FlyingCreaturesIA newGoScript = newGo.GetComponent<FlyingCreaturesIA>();
-                Transform endPatrol = listTo[Random.Range(0, listTo.Count-1)].transform;
+                int randomEndIndex = Random.Range(0, listTo.Count-1);
+                int backuoCounter = 0;
+                Transform endPatrol = listTo[randomEndIndex].transform;
+                while (randomEndIndex == selectedIndex && backuoCounter < 6)
+                {
+                    randomEndIndex = Random.Range(0, listTo.Count-1);
+                    backuoCounter++;
+                }
                 if (newGoScript != null && endPatrol != null)
                 {
                     newGoScript.MoveObjectBetweenTransforms(listTo[selectedIndex].transform, endPatrol);

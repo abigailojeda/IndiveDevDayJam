@@ -26,6 +26,7 @@ public class GridGenerator : MonoBehaviour
     public List<GameObject> tier2Elements = new List<GameObject>();
     public List<GameObject> tier3Elements = new List<GameObject>();
     public List<GameObject> tier4Elements = new List<GameObject>();
+    public List<GameObject> everythingElse = new List<GameObject>();
 
     void Start()
     {
@@ -43,8 +44,10 @@ public class GridGenerator : MonoBehaviour
         FindElementsAtDistance(3, tier3Elements, t3Color);
         FindElementsAtDistance(2, tier2Elements, t2Color);
         FindElementsAtDistance(1, tier1Elements, t1Color);
+        FindElementsAtDistance(5, everythingElse, t1Color);
 
         // Clean up the arrays to remove elements present in lower tiers
+        RemoveElementsInLowerTiers(everythingElse, tier4Elements, tier3Elements, tier2Elements, tier1Elements);
         RemoveElementsInLowerTiers(tier4Elements, tier3Elements, tier2Elements, tier1Elements);
         RemoveElementsInLowerTiers(tier3Elements, tier2Elements, tier1Elements);
         RemoveElementsInLowerTiers(tier2Elements, tier1Elements);
@@ -308,13 +311,24 @@ public class GridGenerator : MonoBehaviour
                     {
                         int currentDistance = Mathf.Abs(i - pathElementRow) + Mathf.Abs(j - pathElementCol);
 
-                        if (currentDistance == distance)
-                        {
-                            if(!elementsList.Contains(currentElement))
+                        if (distance != 5){
+                            if (currentDistance == distance)
                             {
-                                elementsList.Add(currentElement);
+                                if(!elementsList.Contains(currentElement))
+                                {
+                                    elementsList.Add(currentElement);
+                                }
+                                currentElement.GetComponent<MeshRenderer>().material.color = color;
                             }
-                            currentElement.GetComponent<MeshRenderer>().material.color = color;
+                        } else {
+                            if (currentDistance >= distance && currentDistance < 9)
+                            {
+                                if(!elementsList.Contains(currentElement))
+                                {
+                                    elementsList.Add(currentElement);
+                                }
+                                currentElement.GetComponent<MeshRenderer>().material.color = color;
+                            }
                         }
                     }
                 }

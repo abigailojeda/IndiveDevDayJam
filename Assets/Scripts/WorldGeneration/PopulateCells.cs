@@ -14,7 +14,7 @@ public class PopulateCells : MonoBehaviour
     public GameObject[] flowersAndWeedPrefabs;
     public GameObject[] rocksAndTrunksPrefabs;
     public GameObject[] fungusPrefabs;
-
+    public GameObject[] emptyCellTrees;
     public float xSpawnOffsetRange = 0.250f; // Range of random offset in the X-axis
 
     // Losetas para instanciar decoraciones
@@ -23,6 +23,7 @@ public class PopulateCells : MonoBehaviour
     List<GameObject> tier2Elements;
     List<GameObject> tier3Elements;
     List<GameObject> tier4Elements;
+    List<GameObject> everythingElse;
     
     // Losetas para instanciar criaturas despues T1
     public List<GameObject> insectIdleObjectsT1 = new List<GameObject>();
@@ -69,6 +70,7 @@ public class PopulateCells : MonoBehaviour
             tier2Elements = gridGeneratorScript.tier2Elements;
             tier3Elements = gridGeneratorScript.tier3Elements;
             tier4Elements = gridGeneratorScript.tier4Elements;
+            everythingElse = gridGeneratorScript.everythingElse;
         }
 
         // Loop through each GameObject in the array
@@ -87,6 +89,10 @@ public class PopulateCells : MonoBehaviour
         foreach (GameObject cell in tier4Elements)
         {
             populateCell(cell, "T4");
+        }
+        foreach (GameObject cell in everythingElse)
+        {
+            populateEmptyCells(cell);
         }
 
         finishedPopulatingCells?.Invoke();
@@ -154,8 +160,8 @@ public class PopulateCells : MonoBehaviour
             Debug.LogWarning("Child object not found in " + cell.name);
         }
 
-        // ------------------ BackObject -----------------------
-        Transform backObject = cell.transform.Find("BackObject");
+        // ------------------ BackObject 1-----------------------
+        Transform backObject = cell.transform.Find("BackObject1");
 
         if (backObject != null)
         {
@@ -189,6 +195,70 @@ public class PopulateCells : MonoBehaviour
         {
             Debug.LogWarning("Child object not found in " + cell.name);
         }
+
+        // ------------------ BackObject 2-----------------------
+        Transform backObject2 = cell.transform.Find("BackObject2");
+
+        if (backObject2 != null)
+        {
+            GameObject prefab = getRandomPrefabFor("Back", tier);
+            if (prefab != null)
+            {
+                GameObject newObj = Instantiate(prefab, backObject2);
+                newObj.transform.parent = backObject2;
+                assingSpotsToTiersArray(newObj, tier);
+            } else {
+                switch (tier)
+                {
+                    case "T1":
+                        backSpotObjectsT1.Add(backObject2.gameObject);
+                        break;
+                    case "T2":
+                        backSpotObjectsT2.Add(backObject2.gameObject);
+                        break;
+                    case "T3":
+                        backSpotObjectsT3.Add(backObject2.gameObject);
+                        break;
+                    case "T4":
+                        backSpotObjectsT4.Add(backObject2.gameObject);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Child object not found in " + cell.name);
+        }
+    }
+
+    void populateEmptyCells(GameObject cell)
+    {
+        // ------------------ Main Object -----------------------
+        Transform childTransform = cell.transform.Find("MainObject");
+
+        if (childTransform != null)
+        {
+            Vector3 offSet = getRandomOffset();
+            Vector3 spawnPosition = childTransform.position + offSet;
+            int randomChance = UnityEngine.Random.Range(1, 100);
+            if (randomChance <= 20)
+            {
+                GameObject prefab = GetRandomObjectFromArray(emptyCellTrees);
+                if (prefab != null)
+                {
+                    // Instantiate the prefab and make it a child of the specified child object
+                    GameObject newObj = Instantiate(prefab, spawnPosition, Quaternion.identity);
+                    newObj.transform.parent = childTransform;
+                    newObj.transform.LookAt(Camera.main.transform.position);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Child object not found in " + cell.name);
+        }
     }
 
     GameObject getRandomPrefabFor(string position, string tier)
@@ -214,7 +284,7 @@ public class PopulateCells : MonoBehaviour
                         switch (tier)
                         {
                             case "T1":
-                                return GetRandomObjectByProbability(0,0.24f,0.70f,0.05f,0.01f);
+                                return GetRandomObjectByProbability(0,0.20f,0.74f,0.05f,0.01f);
                             case "T2":
                                 return GetRandomObjectByProbability(0f,0.25f,0.54f,0.19f,0.02f);
                             case "T3":

@@ -64,10 +64,10 @@ public class Billboard : MonoBehaviour
                 break;
         }
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
-        /* Vector3 rotation = transform.rotation.eulerAngles;
+        Vector3 rotation = transform.rotation.eulerAngles;
         if (lockX) { rotation.x = originalRotation.x; }
         if (lockY) { rotation.y = originalRotation.y; }
-        if (lockZ) { rotation.z = originalRotation.z; } */
+        if (lockZ) { rotation.z = originalRotation.z; }
     }
     
     /* void SetSortingLayerBasedOnDistance()
