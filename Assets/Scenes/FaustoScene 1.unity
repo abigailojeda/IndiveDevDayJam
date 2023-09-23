@@ -1208,6 +1208,10 @@ PrefabInstance:
       propertyPath: pathColor.r
       value: 0.29307583
       objectReference: {fileID: 0}
+    - target: {fileID: 1112037063, guid: df354eae4ad9fe84eb9f67e4b21cce8e, type: 3}
+      propertyPath: desiredPathLength
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6168535343126340360, guid: df354eae4ad9fe84eb9f67e4b21cce8e, type: 3}
       propertyPath: m_Name
       value: Grid
