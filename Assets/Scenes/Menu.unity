@@ -313,6 +313,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6382007443269373023, guid: 435786a03460f1f438cc4869a03cab66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6382007443321775188, guid: 435786a03460f1f438cc4869a03cab66, type: 3}
       propertyPath: m_Name
       value: AlbumController

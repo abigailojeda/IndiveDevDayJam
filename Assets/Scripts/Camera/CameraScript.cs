@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class CameraScript : MonoBehaviour
 {
@@ -33,12 +34,22 @@ public class CameraScript : MonoBehaviour
     public float photoCd = 4.0f;
     private Texture2D screenCapture;
 
+
     [Header("Debug Options")]
     [SerializeField] private bool FIREMYLASER = false;
     [SerializeField] private bool drawLine = false;
 
 
     private void Start() {
+        if (PlayerPrefs.HasKey("AnimalsData"))
+        {
+            string json = PlayerPrefs.GetString("AnimalsData");
+            Debug.Log("AnimalsData JSON: " + json);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró la clave 'AnimalsData' en PlayerPrefs.");
+        }
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         foreach (var caster in raycasterGrid)
         {
@@ -157,18 +168,27 @@ public class CameraScript : MonoBehaviour
         screenCapture.ReadPixels(regionToRead, 0, 0, false);
         screenCapture.Apply();
 
+
+        //TO SAVE SCREENSHOOT
+        //byte[] bytes = screenCapture.EncodeToPNG();
+        //string fileName = "CapturedPhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+        //string filePath = Application.dataPath + "/Screenshoots/" + fileName;
+        //System.IO.File.WriteAllBytes(filePath, bytes);
+        //UnityEditor.AssetDatabase.Refresh();
+
+
         //HIDE ANIMALS AFTER TAKE PHOTO
         foreach (GameObject target in validTargets)
         {
             target.SetActive(false);
         }
 
-
         ShowPhoto();
 
         yield return new WaitForSeconds(2f);
         RemovePhoto();
     }
+
 
     private IEnumerator photoTakenCoroutine()
     {
@@ -190,10 +210,8 @@ public class CameraScript : MonoBehaviour
     //TO SAVE ANIMALS PHOTOGRAPHED
     private void SavePhotographedObject(GameObject obj)
     {
+        Debug.Log("se guardó:" + obj);
         photographedObjectsList.Add(obj);
-        string json = JsonUtility.ToJson(photographedObjectsList);
-        PlayerPrefs.SetString("PhotographedObjects", json);
-        PlayerPrefs.Save();
     }
 
     public List<GameObject> GetPhotographedObjectsList()
