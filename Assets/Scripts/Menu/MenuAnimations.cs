@@ -9,9 +9,11 @@ public class MenuAnimations : MonoBehaviour
     [SerializeField] private Animator moonAnimator;
     [SerializeField] private Animator sunAnimator;
     [SerializeField] private Animator albumButtonAnimator;
+    [SerializeField] private Animator logoAnimator;
     void Start()
     {
         albumButtonAnimator.Play("AlbumButton");
+        logoAnimator.Play("Logo");
     }
 
     public void night()

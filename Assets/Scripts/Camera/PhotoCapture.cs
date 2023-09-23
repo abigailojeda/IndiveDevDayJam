@@ -66,7 +66,6 @@ public class PhotoCapture : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !viewingPhoto && isTarget && CameraIsActive)
         {
-            Debug.Log("aquiiii");
             cameraWorks.SetActive(false);
             CameraIsActive = false;
 

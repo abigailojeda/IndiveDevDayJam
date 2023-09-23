@@ -8,7 +8,8 @@ using System;
 public class CameraScript : MonoBehaviour
 {
     public static Action<GameObject> photographedObject;
-    
+    private List<GameObject> photographedObjectsList = new List<GameObject>();
+
     [Header("Photo Taker")]
     [SerializeField] private Image photoDisplayArea;
     [SerializeField] private GameObject photoFrame;
@@ -43,6 +44,9 @@ public class CameraScript : MonoBehaviour
         {
             anyValidHitDic[caster] = false;
         }
+
+        //SUBSCRIBE TO PHOTOGRAPHED ACTION
+        photographedObject += SavePhotographedObject;
     }
 
     private void Update() {
@@ -88,6 +92,7 @@ public class CameraScript : MonoBehaviour
             StartCoroutine(CapturePhoto());
             foreach (var vTarget in validTargets)
             {
+                Debug.Log("has hecho foto de :" + vTarget);
                 photographedObject?.Invoke(vTarget);
             }
         }
@@ -151,6 +156,14 @@ public class CameraScript : MonoBehaviour
         Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
         screenCapture.ReadPixels(regionToRead, 0, 0, false);
         screenCapture.Apply();
+
+        //HIDE ANIMALS AFTER TAKE PHOTO
+        foreach (GameObject target in validTargets)
+        {
+            target.SetActive(false);
+        }
+
+
         ShowPhoto();
 
         yield return new WaitForSeconds(2f);
@@ -172,5 +185,19 @@ public class CameraScript : MonoBehaviour
                 tempObj.transform.DOMove(destination, 1, false).SetEase(Ease.Linear).OnComplete(() => { Destroy(tempObj); });
             }
         if (drawLine) Debug.DrawLine(caster.transform.position, destination, Color.red, 30.0f);
+    }
+
+    //TO SAVE ANIMALS PHOTOGRAPHED
+    private void SavePhotographedObject(GameObject obj)
+    {
+        photographedObjectsList.Add(obj);
+        string json = JsonUtility.ToJson(photographedObjectsList);
+        PlayerPrefs.SetString("PhotographedObjects", json);
+        PlayerPrefs.Save();
+    }
+
+    public List<GameObject> GetPhotographedObjectsList()
+    {
+        return photographedObjectsList;
     }
 }

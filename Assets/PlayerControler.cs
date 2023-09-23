@@ -57,15 +57,15 @@ public class PlayerControler : MonoBehaviour
 
     public bool ChecklIsTarget()
     {
-        Debug.Log("entró");
+     
 
         Debug.DrawRay(camera.position, camera.forward * rayDistance, Color.red);
         RaycastHit hit;
-        Debug.Log("entró 1" + camera.position + "/" + camera.forward);
+
    
         if (Physics.Raycast(camera.position, camera.forward, out hit, rayDistance))
         {
-            Debug.Log("en el raycast" + hit);
+  
 
             if (hit.transform.tag == "target")
             {
