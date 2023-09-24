@@ -41,12 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: AlbumBtns
+    uniqueID: 1716558445
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Album
     uniqueID: 1143033327
-    locked: 0
-  - name: AlbumBtns
-    uniqueID: 1716558445
     locked: 0

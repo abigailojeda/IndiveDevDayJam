@@ -8,11 +8,13 @@ using UnityEngine.SceneManagement;
 public class AnimalPhoto
 {
     public string name;
+    public string description;
     public bool photographed;
 
-    public AnimalPhoto(string name)
+    public AnimalPhoto(string name, string description)
     {
         this.name = name;
+        this.description = description;
         this.photographed = false;
     }
 }
