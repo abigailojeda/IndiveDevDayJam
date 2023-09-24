@@ -10,6 +10,7 @@ public class CameraScript : MonoBehaviour
 {
     public static Action<GameObject> photographedObject;
     private List<GameObject> photographedObjectsList = new List<GameObject>();
+    public PlayerMovement playerMovementScript;
 
     [Header("Photo Taker")]
     [SerializeField] private Image photoDisplayArea;
@@ -48,7 +49,7 @@ public class CameraScript : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No se encontró la clave 'AnimalsData' en PlayerPrefs.");
+            Debug.LogWarning("No se encontrï¿½ la clave 'AnimalsData' en PlayerPrefs.");
         }
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         foreach (var caster in raycasterGrid)
@@ -65,7 +66,7 @@ public class CameraScript : MonoBehaviour
         {
             validTargets.Clear();
         }
-        if (Input.GetKey(KeyCode.E) && !viewingPhoto)
+        if (Input.GetKey(KeyCode.E) && !viewingPhoto && !(Time.timeScale < 1))
         {
             aiming = true;
             if (!viewingPhoto && validTargets.Count > 0)
@@ -104,6 +105,7 @@ public class CameraScript : MonoBehaviour
             foreach (var vTarget in validTargets)
             {
                 Debug.Log("has hecho foto de :" + vTarget);
+                playerMovementScript.updateAlbum();
                 photographedObject?.Invoke(vTarget);
             }
         }
@@ -210,7 +212,7 @@ public class CameraScript : MonoBehaviour
     //TO SAVE ANIMALS PHOTOGRAPHED
     private void SavePhotographedObject(GameObject obj)
     {
-        Debug.Log("se guardó:" + obj);
+        Debug.Log("se guardï¿½:" + obj);
         photographedObjectsList.Add(obj);
     }
 

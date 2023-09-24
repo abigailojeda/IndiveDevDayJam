@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AlbumController : MonoBehaviour
 {
+    public static Action<int> amountCaptured;
 
     [System.Serializable]
     public class Animal
@@ -30,6 +32,13 @@ public class AlbumController : MonoBehaviour
     private int currentPageIndex = 0;
     //public  List<GameObject> photographedObjectsList = new List<GameObject>();
 
+    private void OnEnable() {
+        CameraScript.photographedObject += photoTaken;
+    }
+    private void OnDisable() {
+        CameraScript.photographedObject -= photoTaken;
+    }
+
     void Start()
     {
         Debug.Log("STARTTTTTT");
@@ -44,6 +53,12 @@ public class AlbumController : MonoBehaviour
     public void ChangePage(int offset)
     {
      
+        if(offset == 1)
+        {
+            AudioManager.Instance.PlayRandomAlbumArrowR();
+        } else {
+            AudioManager.Instance.PlayRandomAlbumArrowL();
+        }
         pages[currentPageIndex].SetActive(false);
 
      
@@ -71,6 +86,7 @@ public class AlbumController : MonoBehaviour
     {
         // Verifica si ya existe un JSON en PlayerPrefs
         if (PlayerPrefs.GetInt("Initialized") != 1)
+        /* if (true) */
         {
 
             // Si no existe, inicializa la lista de animales con la propiedad 'photographed' en false
@@ -97,7 +113,7 @@ public class AlbumController : MonoBehaviour
 
             //PAGE3
             menuAnimals.Add(new Animal("unicornio"));
-            menuAnimals.Add(new Animal("chtulu"));
+            menuAnimals.Add(new Animal("chthulhu"));
             menuAnimals.Add(new Animal("dragon"));
             menuAnimals.Add(new Animal("buho"));
             menuAnimals.Add(new Animal("stitch"));
@@ -110,7 +126,7 @@ public class AlbumController : MonoBehaviour
 
             Debug.Log("estas intentando guardar: " + data);
 
-            // Convierte la instancia de AnimalsData en JSON y guárdala en PlayerPrefs
+            // Convierte la instancia de AnimalsData en JSON y guï¿½rdala en PlayerPrefs
             string json = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("AnimalsData", json);
             PlayerPrefs.SetInt("Initialized", 1);
@@ -148,6 +164,7 @@ public class AlbumController : MonoBehaviour
 
     public void LoadPhotographedObjects()
     {
+        int counter = 0;
         Debug.Log("SI QUE ENTROOOOOO");
         if (PlayerPrefs.HasKey("AnimalsData"))
         {
@@ -155,14 +172,39 @@ public class AlbumController : MonoBehaviour
             Debug.Log("AnimalsData JSON: " + json);
             AnimalsData data = JsonUtility.FromJson<AnimalsData>(json);
 
-            // Itera a través de los animales y activa los sprites correspondientes
+            // Itera a travï¿½s de los animales y activa los sprites correspondientes
             foreach (Animal animal in data.animales)
             {
                 if (animal.photographed)
                {
                   ActivateAnimalSprite(animal.name);
+                  counter++;
                }
             }
+            amountCaptured?.Invoke(counter);
+        }
+    }
+
+    public void photoTaken(GameObject captured){
+        StartCoroutine(ExecuteDelayedFunction());
+    }
+    private IEnumerator ExecuteDelayedFunction()
+    {
+        InitializeMenuAnimals();
+        yield return new WaitForSeconds(0.5f);
+        int counter = 0;
+        if (PlayerPrefs.HasKey("AnimalsData"))
+        {
+            string json = PlayerPrefs.GetString("AnimalsData");
+            AnimalsData data = JsonUtility.FromJson<AnimalsData>(json);
+            foreach (Animal animal in data.animales)
+            {
+                if (animal.photographed)
+               {
+                  counter++;
+               }
+            }
+            amountCaptured?.Invoke(counter);
         }
     }
 
@@ -181,6 +223,7 @@ public class AlbumController : MonoBehaviour
     //TO CLOSE ALBUM
     public void closeAlbum()
     {
+        AudioManager.Instance.PlayRandomAlbumPickup();
         album.SetActive(false);
     }
 }

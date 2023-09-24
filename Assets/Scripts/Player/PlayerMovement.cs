@@ -35,13 +35,14 @@ public class PlayerMovement : MonoBehaviour
     public float moveDuration = 2.0f;
     private int currentWaypointIndex = 0;
     private bool isMoving = false;
+     public BlackScreen blackScreenScript;
 
     private void OnEnable() {
-        PopulateCells.finishedPopulatingCells += movePlayer;
+        /* PopulateCells.finishedPopulatingCells += movePlayer; */
         PopulateCells.finishedPopulatingCells += teleportPlayer;
     }
     private void OnDisable() {
-        PopulateCells.finishedPopulatingCells -= movePlayer;
+        /* PopulateCells.finishedPopulatingCells -= movePlayer; */
         PopulateCells.finishedPopulatingCells -= teleportPlayer;
     }
 
@@ -56,12 +57,16 @@ public class PlayerMovement : MonoBehaviour
     }
     void teleportPlayer()
     {
+        AudioManager.Instance.PlayMusic("GameTheme");
+        AudioManager.Instance.PlayAmbience("AmbientForestNight");
+        blackScreenScript.FadeOut(1f);
         setPathArray();
         transform.position = pathElements[0].transform.position;
+        movePlayer();
     }
     void movePlayer()
     {
-        setPathArray();
+        /* setPathArray(); */
         if (currentWaypointIndex < pathElements.Count)
         {
             GameObject nextWaypoint = pathElements[currentWaypointIndex];
@@ -168,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No se encontró la clave 'AnimalsData' en PlayerPrefs.");
+            Debug.LogWarning("No se encontrï¿½ la clave 'AnimalsData' en PlayerPrefs.");
         }
     }
 }
