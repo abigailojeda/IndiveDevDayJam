@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637730618375426262, guid: 435786a03460f1f438cc4869a03cab66, type: 3}
       propertyPath: m_fontSizeMin
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5668579033187399188, guid: 435786a03460f1f438cc4869a03cab66, type: 3}
       propertyPath: m_IsActive
