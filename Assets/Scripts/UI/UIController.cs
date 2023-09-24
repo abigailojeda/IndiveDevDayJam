@@ -34,6 +34,12 @@ public class UIController : MonoBehaviour
         AlbumController.amountCaptured -= updateAmount;
     }
 
+    private void Start() {
+        _musicSlider.value = AudioManager.Instance.musicSource.volume;
+        _sfxSlider.value = AudioManager.Instance.sfxSource.volume;
+        _ambienceSlider.value = AudioManager.Instance.ambienceSource.volume;
+    }
+
 
     void Update()
     {

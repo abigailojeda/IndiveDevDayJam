@@ -76,8 +76,8 @@ public class PopulateCreatures : MonoBehaviour
 
     void populateSmall()
     {
-        ProcessListPorcentage(smallIdleObjectsT1, smallIdlePrefabs, 3);
-        ProcessListPorcentage(smallIdleObjectsT2, smallIdlePrefabs, 5);
+        ProcessListPorcentage(smallIdleObjectsT1, smallIdlePrefabs, 4);
+        ProcessListPorcentage(smallIdleObjectsT2, smallIdlePrefabs, 6);
         ProcessListPorcentage(smallIdleObjectsT3, smallIdlePrefabs, 5);
         ProcessListPorcentage(smallIdleObjectsT4, smallIdlePrefabs, 1);
     }

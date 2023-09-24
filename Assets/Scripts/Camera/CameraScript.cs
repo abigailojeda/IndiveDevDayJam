@@ -30,7 +30,7 @@ public class CameraScript : MonoBehaviour
     public GameObject[] raycasterGrid;
     public int rayDistance = 100; // Adjust the distance as needed
     public GameObject visualTestObj;
-    public Vector3 boxSize = new Vector3(3f, 3f, 3f);
+    public Vector3 boxSize = new Vector3(2f, 2f, 2f);
     bool aiming = false;
     public Camera cameraZoom;
     public bool canTakePhoto = false;

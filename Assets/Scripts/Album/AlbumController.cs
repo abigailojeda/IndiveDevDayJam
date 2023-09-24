@@ -180,7 +180,7 @@ public class AlbumController : MonoBehaviour
                 {
                     if (textMesh.name == animal.name)
                     {
-                        textMesh.text = animal.description;
+                        textMesh.text = animal.photographed? animal.description : "Aun no encontrado";
                         break; // Sal del bucle una vez que se encuentre el TextMeshProUGUI correspondiente.
                     }
                 }

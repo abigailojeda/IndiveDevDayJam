@@ -50,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable() {
         /* PopulateCells.finishedPopulatingCells -= movePlayer; */
         PopulateCells.finishedPopulatingCells -= teleportPlayer;
+        StopCoroutine(PlayFootstepsRoutine());
+    }
+    private void OnDestroy() {
+        StopCoroutine(PlayFootstepsRoutine());
     }
 
     
@@ -69,15 +73,15 @@ public class PlayerMovement : MonoBehaviour
         setPathArray();
         transform.position = pathElements[0].transform.position;
         movePlayer();
-    }
-    void movePlayer()
-    {
-         // Start playing the first footstep sound immediately.
+        // Start playing the first footstep sound immediately.
         PlayFootstepSound();
         StopCoroutine(PlayFootstepsRoutine());
         
         // Start a repeating coroutine to play footstep sounds every second.
         StartCoroutine(PlayFootstepsRoutine());
+    }
+    void movePlayer()
+    {
         walking = true;
         /* setPathArray(); */
         if (currentWaypointIndex < pathElements.Count)
@@ -145,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
     {
         while (walking)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1);
+            Debug.Log("espero 1 segundos en teoria");
             PlayFootstepSound();
         }
     }

@@ -13,6 +13,7 @@ public class Creature3DAudioScript : MonoBehaviour
     {
         // Start the repeating method with a random delay between minInterval and maxInterval
         InvokeRepeating("PlayRandomSound", Random.Range(minInterval, maxInterval), Random.Range(minInterval, maxInterval));
+        audioSource.volume = AudioManager.Instance.ambienceSource.volume;
     }
 
     private void OnDestroy() {
