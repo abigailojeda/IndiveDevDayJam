@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEditor.SceneManagement;
 
 public class CameraScript : MonoBehaviour
 {
@@ -31,14 +32,24 @@ public class CameraScript : MonoBehaviour
     public GameObject visualTestObj;
     public Vector3 boxSize = new Vector3(3f, 3f, 3f);
     bool aiming = false;
+    public Camera cameraZoom;
     public bool canTakePhoto = false;
     public float photoCd = 4.0f;
     private Texture2D screenCapture;
+    bool playerCameraLookAlready = false;
 
 
     [Header("Debug Options")]
     [SerializeField] private bool FIREMYLASER = false;
     [SerializeField] private bool drawLine = false;
+
+    private void OnEnable() {
+        //SUBSCRIBE TO PHOTOGRAPHED ACTION
+        photographedObject += SavePhotographedObject;
+    }
+    private void OnDisable() {
+        photographedObject -= SavePhotographedObject;
+    }
 
 
     private void Start() {
@@ -57,8 +68,6 @@ public class CameraScript : MonoBehaviour
             anyValidHitDic[caster] = false;
         }
 
-        //SUBSCRIBE TO PHOTOGRAPHED ACTION
-        photographedObject += SavePhotographedObject;
     }
 
     private void Update() {
@@ -66,9 +75,14 @@ public class CameraScript : MonoBehaviour
         {
             validTargets.Clear();
         }
-        if (Input.GetKey(KeyCode.E) && !viewingPhoto && !(Time.timeScale < 1))
+        if (Input.GetKey(KeyCode.E) && !viewingPhoto && !UIController.inEndGameScreen && !(Time.timeScale < 1))
         {
             aiming = true;
+            cameraZoom.fieldOfView = 40;
+            if (!playerCameraLookAlready){
+                AudioManager.Instance.PlayRandomLookCamera();
+                playerCameraLookAlready = true;
+            }
             if (!viewingPhoto && validTargets.Count > 0)
             {
                 cameraUsable.SetActive(true);
@@ -79,6 +93,8 @@ public class CameraScript : MonoBehaviour
             }
         } else {
             aiming = false;
+            cameraZoom.fieldOfView = 50;
+            playerCameraLookAlready = false;
             cameraUsable.SetActive(false);
             cameraUnusable.SetActive(false);
         }
@@ -98,19 +114,25 @@ public class CameraScript : MonoBehaviour
             validTargets.Clear();
         }
 
-        if (Input.GetMouseButtonDown(0) && aiming && !viewingPhoto && validTargets.Count > 0)
+        if (Input.GetMouseButtonDown(0) && canInteract() && validTargets.Count > 0)
         {
+            cameraZoom.fieldOfView = 40;
+            playerCameraLookAlready = false;
+            AudioManager.Instance.PlayRandomShutterCamera();
             cameraUsable.SetActive(false);
             StartCoroutine(CapturePhoto());
             foreach (var vTarget in validTargets)
             {
                 Debug.Log("has hecho foto de :" + vTarget);
-                playerMovementScript.updateAlbum();
                 photographedObject?.Invoke(vTarget);
             }
+        } else if (Input.GetMouseButtonDown(0) && aiming && !viewingPhoto && validTargets.Count <= 0) {
+            AudioManager.Instance.PlayRandomOffCamera();
         }
     }
-
+    bool canInteract(){
+        return !UIController.isPaused && !UIController.viewingAlbum && !UIController.inEndGameScreen && !viewingPhoto;
+    }
     bool checkIfAnyValidHit()
     {
         bool anyHit = false;
@@ -214,6 +236,7 @@ public class CameraScript : MonoBehaviour
     {
         Debug.Log("se guard�:" + obj);
         photographedObjectsList.Add(obj);
+        playerMovementScript.updateAlbum();
     }
 
     public List<GameObject> GetPhotographedObjectsList()

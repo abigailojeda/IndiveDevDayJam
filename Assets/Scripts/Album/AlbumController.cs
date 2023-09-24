@@ -41,7 +41,7 @@ public class AlbumController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("STARTTTTTT");
+        /* Debug.Log("STARTTTTTT"); */
         InitializeMenuAnimals();
 
         pages[currentPageIndex].SetActive(true);
@@ -67,7 +67,7 @@ public class AlbumController : MonoBehaviour
       
         currentPageIndex = Mathf.Clamp(currentPageIndex, 0, pages.Length - 1);
 
-        Debug.Log("pagina: " + currentPageIndex);
+        // Debug.Log("pagina: " + currentPageIndex);
 
         pages[currentPageIndex].SetActive(true);
 
@@ -131,12 +131,7 @@ public class AlbumController : MonoBehaviour
             PlayerPrefs.Save();
 
         }
-        else
-        {
         LoadPhotographedObjects();
-        }
-
-
     }
 
 
@@ -158,7 +153,6 @@ public class AlbumController : MonoBehaviour
                {
                   ActivateAnimalSprite(animal.name);
                   counter++;
-                    Debug.Log("Desde el load" + counter);
                }
             }
             amountCaptured?.Invoke(counter);
@@ -182,7 +176,6 @@ public class AlbumController : MonoBehaviour
                 if (animal.photographed)
                {
                   counter++;
-                    Debug.Log("Desde photoTaken" + counter);
 
                 }
             }

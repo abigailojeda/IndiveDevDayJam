@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3503456582225082544}
-  - component: {fileID: 3503456582225082545}
+  - component: {fileID: 2830271599127236643}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -25,15 +25,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3503456582225082551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 1.33, z: 0}
+  m_LocalPosition: {x: 0.06, y: 1.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3503456583213680206}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3503456582225082545
-CapsuleCollider:
+--- !u!135 &2830271599127236643
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,9 +42,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.2
-  m_Height: 6.36
-  m_Direction: 0
+  serializedVersion: 2
+  m_Radius: 3.45
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3503456583123047881
 GameObject:

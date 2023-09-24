@@ -284,9 +284,9 @@ public class PopulateCells : MonoBehaviour
                         switch (tier)
                         {
                             case "T1":
-                                return GetRandomObjectByProbability(0,0.20f,0.74f,0.05f,0.01f);
+                                return GetRandomObjectByProbability(0,0.18f,0.74f,0.05f,0.03f);
                             case "T2":
-                                return GetRandomObjectByProbability(0f,0.25f,0.54f,0.19f,0.02f);
+                                return GetRandomObjectByProbability(0f,0.25f,0.54f,0.16f,0.05f);
                             case "T3":
                                 return GetRandomObjectByProbability(0f,0.40f,0.40f,0.20f,0);
                             case "T4":
@@ -298,9 +298,9 @@ public class PopulateCells : MonoBehaviour
                         switch (tier)
                         {
                             case "T1":
-                                return GetRandomObjectByProbability(0,0.20f,0.40f,0.30f,0.02f);
+                                return GetRandomObjectByProbability(0,0.20f,0.40f,0.28f,0.04f);
                             case "T2":
-                                return GetRandomObjectByProbability(0.10f,0.15f,0.15f,0.15f,0.02f);
+                                return GetRandomObjectByProbability(0.10f,0.14f,0.14f,0.14f,0.05f);
                             case "T3":
                                 return GetRandomObjectByProbability(0.10f,0.10f,0f,0.20f,0);
                             case "T4":

@@ -19,13 +19,20 @@ public class FirstPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float inputX = Input.GetAxis("Mouse X") * mouseSenitivity;
-        float inputY = Input.GetAxis("Mouse Y") * mouseSenitivity;
-        
-        cameraVerticalRotation -= inputY;
-        cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -45f, 50f);
-        transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
+        if (canMoveCamera())
+        {
+            float inputX = Input.GetAxis("Mouse X") * mouseSenitivity;
+            float inputY = Input.GetAxis("Mouse Y") * mouseSenitivity;
+            
+            cameraVerticalRotation -= inputY;
+            cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -45f, 50f);
+            transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
 
-        player.Rotate(Vector3.up * inputX);
+            player.Rotate(Vector3.up * inputX);
+        }
+    }
+
+    bool canMoveCamera(){
+        return !UIController.isPaused && !UIController.viewingAlbum && !UIController.inEndGameScreen;
     }
 }

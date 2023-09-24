@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving = false;
     public GameObject endMenu;
     public BlackScreen blackScreenScript;
+    public AudioSource footstepAudioSource;
+    private int currentFoot = 0;
+    public static bool walking = false;
 
     private void OnEnable() {
         /* PopulateCells.finishedPopulatingCells += movePlayer; */
@@ -67,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void movePlayer()
     {
+         // Start playing the first footstep sound immediately.
+        PlayFootstepSound();
+        StopCoroutine(PlayFootstepsRoutine());
+        
+        // Start a repeating coroutine to play footstep sounds every second.
+        StartCoroutine(PlayFootstepsRoutine());
+        walking = true;
         /* setPathArray(); */
         if (currentWaypointIndex < pathElements.Count)
         {
@@ -117,13 +127,31 @@ public class PlayerMovement : MonoBehaviour
             //Time.timeScale = 1;
 
             endMenu.SetActive(true);
+            walking = false;
+            UIController.inEndGameScreen = true;
         }
-        
-        
+    }
+
+    private void PlayFootstepSound()
+    {
+        AudioClip s = (currentFoot == 0) ? AudioManager.Instance.getRightFootSound() : AudioManager.Instance.getLeftFootSound();
+        footstepAudioSource.PlayOneShot(s);
+        currentFoot = 1 - currentFoot; // Toggle between 0 (right) and 1 (left).
+    }
+
+    private IEnumerator PlayFootstepsRoutine()
+    {
+        while (walking)
+        {
+            yield return new WaitForSeconds(1.0f);
+            PlayFootstepSound();
+        }
     }
 
     public void endPhase()
     {
+        walking = false;
+        UIController.inEndGameScreen = false;
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
         AudioManager.Instance.PlayMusic("MenuTheme");
         AudioManager.Instance.PlayAmbience("AmbientForestDay");

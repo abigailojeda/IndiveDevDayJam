@@ -15,6 +15,12 @@ public class Creature3DAudioScript : MonoBehaviour
         InvokeRepeating("PlayRandomSound", Random.Range(minInterval, maxInterval), Random.Range(minInterval, maxInterval));
     }
 
+    private void OnDestroy() {
+        CancelInvoke();
+    }
+    private void OnDisable() {
+        CancelInvoke();
+    }
     private void PlayRandomSound()
     {
         // Check if there are sounds in the array

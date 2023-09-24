@@ -14,8 +14,10 @@ public class UIController : MonoBehaviour
     public Image buttonCameraClick;
     public Image buttonAlbum;
     public TextMeshProUGUI amountText;
-    bool isPaused = false;
-    bool viewingAlbum = false;
+     public TextMeshProUGUI endGameAmountText;
+    public static bool isPaused = false;
+    public static bool viewingAlbum = false;
+    public static bool inEndGameScreen = false;
 
     public Slider _musicSlider;
     public Slider _sfxSlider;
@@ -23,7 +25,7 @@ public class UIController : MonoBehaviour
 
     public void MusicVolume() { AudioManager.Instance.MusicVolume(_musicSlider.value); }
     public void sfxVolume() { AudioManager.Instance.SfxVolume(_sfxSlider.value); }
-    public void ambienceVolue() { AudioManager.Instance.SfxVolume(_ambienceSlider.value); }
+    public void ambienceVolue() { AudioManager.Instance.AmbienceVolume(_ambienceSlider.value); }
 
     private void OnEnable() {
         AlbumController.amountCaptured += updateAmount;
@@ -38,12 +40,7 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
 
-            if (Time.timeScale < 1)
-            {
-               
-
-            }
-            else
+            if (!isPaused && !inEndGameScreen && !viewingAlbum)
             {
                 playerMovementScript.updateAlbum();
                 albumcontrollerScript.LoadPhotographedObjects();
@@ -51,7 +48,7 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if(!isPaused && !viewingAlbum)
+        if(!isPaused && !viewingAlbum && !inEndGameScreen)
         {
             if (Input.GetKey(KeyCode.E))
             {
@@ -63,13 +60,14 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !isPaused && !viewingAlbum){
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !isPaused && !viewingAlbum && !inEndGameScreen){
             pauseGame();
         } else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && isPaused){
             unPauseGame();
         }
     }
     public void pauseGame(){
+        PlayerMovement.walking = false;
         Time.timeScale = 0;
         isPaused = true;
         Cursor.visible = true;
@@ -83,6 +81,7 @@ public class UIController : MonoBehaviour
     }
 
     public void unPauseGame(){
+        PlayerMovement.walking = true;
         Time.timeScale = 1;
         isPaused = false;
         Cursor.visible = false;
@@ -97,6 +96,7 @@ public class UIController : MonoBehaviour
     }
     public void ShowAlbum()
     {
+        PlayerMovement.walking = false;
         Time.timeScale = 0;
         viewingAlbum = true;
         Cursor.visible = true;
@@ -112,6 +112,7 @@ public class UIController : MonoBehaviour
     
     public void HideAlbum()
     {
+        PlayerMovement.walking = true;
         Time.timeScale = 1;
         viewingAlbum = false;
         Cursor.visible = false;
@@ -125,6 +126,7 @@ public class UIController : MonoBehaviour
     }
 
     public void returnToMainMenu(){
+        PlayerMovement.walking = false;
         Time.timeScale = 1;
         isPaused = false;
         Cursor.visible = true;
@@ -140,6 +142,7 @@ public class UIController : MonoBehaviour
     {
         if (amountText != null){
             amountText.text = amount.ToString() + "/24";
+            endGameAmountText.text = amount.ToString() + "/24";
         }
     }
 }

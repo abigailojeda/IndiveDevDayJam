@@ -76,34 +76,34 @@ public class PopulateCreatures : MonoBehaviour
 
     void populateSmall()
     {
-        ProcessListPorcentage(smallIdleObjectsT1, smallIdlePrefabs, 10);
-        ProcessListPorcentage(smallIdleObjectsT2, smallIdlePrefabs, 15);
+        ProcessListPorcentage(smallIdleObjectsT1, smallIdlePrefabs, 3);
+        ProcessListPorcentage(smallIdleObjectsT2, smallIdlePrefabs, 5);
         ProcessListPorcentage(smallIdleObjectsT3, smallIdlePrefabs, 5);
         ProcessListPorcentage(smallIdleObjectsT4, smallIdlePrefabs, 1);
     }
     void populateLarge(){
         ProcessListPorcentage(backSpotObjectsT1, largeAnimalsPrefabs, 1);
         ProcessListPorcentage(backSpotObjectsT2, largeAnimalsPrefabs, 5);
-        ProcessListPorcentage(backSpotObjectsT3, largeAnimalsPrefabs, 15);
-        ProcessListPorcentage(backSpotObjectsT4, largeAnimalsPrefabs, 20);
+        ProcessListPorcentage(backSpotObjectsT3, largeAnimalsPrefabs, 8);
+        ProcessListPorcentage(backSpotObjectsT4, largeAnimalsPrefabs, 8);
     }
     void populateVerticalInsects(){
-        ProcessListPorcentage(insectVerticalObjectsT1, insectsVerticalPrefabs, 10);
-        ProcessListPorcentage(insectVerticalObjectsT2, insectsVerticalPrefabs, 15);
+        ProcessListPorcentage(insectVerticalObjectsT1, insectsVerticalPrefabs, 4);
+        ProcessListPorcentage(insectVerticalObjectsT2, insectsVerticalPrefabs, 10);
         ProcessListPorcentage(insectVerticalObjectsT3, insectsVerticalPrefabs, 15);
         ProcessListPorcentage(insectVerticalObjectsT4, insectsVerticalPrefabs, 0);
     }
     void populateFlyingInsects(){
         ProcessListPorcentage(flyingIdleObjectsT1, flyingInsecsPrefabs, 5);
-        ProcessListPorcentage(flyingIdleObjectsT2, flyingInsecsPrefabs, 10);
+        ProcessListPorcentage(flyingIdleObjectsT2, flyingInsecsPrefabs, 5);
         ProcessListPorcentage(flyingIdleObjectsT3, flyingInsecsPrefabs, 5);
         ProcessListPorcentage(flyingIdleObjectsT4, flyingInsecsPrefabs, 5);
     }
     void populateFlyingIdle(){
-        ProcessListPorcentage(flyingIdleObjectsT1, flyingIdlePrefabs, 10);
-        ProcessListPorcentage(flyingIdleObjectsT2, flyingIdlePrefabs, 15);
+        ProcessListPorcentage(flyingIdleObjectsT1, flyingIdlePrefabs, 1);
+        ProcessListPorcentage(flyingIdleObjectsT2, flyingIdlePrefabs, 2);
         ProcessListPorcentage(flyingIdleObjectsT3, flyingIdlePrefabs, 2);
-        ProcessListPorcentage(flyingIdleObjectsT4, flyingIdlePrefabs, 1);
+        ProcessListPorcentage(flyingIdleObjectsT4, flyingIdlePrefabs, 2);
     }
     private void ProcessListPorcentage(List<GameObject> listTo, GameObject[] listFrom, int percentage)
     {
