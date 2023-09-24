@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveDuration = 2.0f;
     private int currentWaypointIndex = 0;
     private bool isMoving = false;
-     public BlackScreen blackScreenScript;
+    public GameObject endMenu;
+    public BlackScreen blackScreenScript;
 
     private void OnEnable() {
         /* PopulateCells.finishedPopulatingCells += movePlayer; */
@@ -95,7 +96,27 @@ public class PlayerMovement : MonoBehaviour
                 Debug.LogWarning("Child object not found in " + nextWaypoint.name);
             }
         } else {
-            endPhase();
+
+            CameraScript cameraScript = FindObjectOfType<CameraScript>();
+            var photographedObjectsList = cameraScript.GetPhotographedObjectsList();
+            List<string> animalNames = new List<string>();
+
+            Debug.Log(photographedObjectsList);
+            foreach (GameObject animalGameObject in photographedObjectsList)
+            {
+
+                string animalName = animalGameObject.name.Replace("(Clone)", "");
+                animalNames.Add(animalName);
+
+                Debug.Log("Animal fotografiado: " + animalName);
+            }
+
+            updateAnimalsData(animalNames);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            //Time.timeScale = 1;
+
+            endMenu.SetActive(true);
         }
         
         
@@ -103,24 +124,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void endPhase()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-      
-        CameraScript cameraScript = FindObjectOfType<CameraScript>();
-        var photographedObjectsList = cameraScript.GetPhotographedObjectsList();
-        List<string> animalNames = new List<string>();
-
-        Debug.Log(photographedObjectsList);
-        foreach (GameObject animalGameObject in photographedObjectsList)
-        {
-            
-            string animalName = animalGameObject.name.Replace("(Clone)", "");
-            animalNames.Add(animalName);
-      
-            Debug.Log("Animal fotografiado: " + animalName);
-        }
-
-        updateAnimalsData(animalNames);
+        AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
+        AudioManager.Instance.PlayMusic("MenuTheme");
+        AudioManager.Instance.PlayAmbience("AmbientForestDay");
         SceneManager.LoadScene("Menu");
 
     }
@@ -140,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             string animalName = animalGameObject.name.Replace("(Clone)", "");
             animalNames.Add(animalName);
 
-            Debug.Log("Animal fotografiado: " + animalName);
+            //Debug.Log("Animal fotografiado: " + animalName);
         }
 
         updateAnimalsData(animalNames);
@@ -149,12 +155,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void updateAnimalsData(List<string> animalNamesList)
     {
-        Debug.Log("ANIMALITOS: "+animalNamesList);
+        //Debug.Log("ANIMALITOS: "+animalNamesList);
         //GET DATA FROM PLAYERPREFS
         if (PlayerPrefs.HasKey("AnimalsData"))
         {
             string json = PlayerPrefs.GetString("AnimalsData");
-            Debug.Log("AnimalsData JSON: " + json);
+            //Debug.Log("AnimalsData JSON: " + json);
             AnimalsData data = JsonUtility.FromJson<AnimalsData>(json);
             foreach (AnimalPhoto animal in data.animales)
             {
@@ -163,10 +169,9 @@ public class PlayerMovement : MonoBehaviour
                     animal.photographed = true;
                 }
             }
-            Debug.Log("ANTES DE updated: " + data);
             string updatedJson = JsonUtility.ToJson(data);
 
-            Debug.Log("updated: " + updatedJson);
+            //Debug.Log("updated: " + updatedJson);
 
             PlayerPrefs.SetString("AnimalsData", updatedJson);
             PlayerPrefs.Save();

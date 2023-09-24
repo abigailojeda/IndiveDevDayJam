@@ -55,7 +55,6 @@ public class UIController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                Debug.Log("apreto E");
                 buttonCameraE.enabled = false;
                 buttonCameraClick.enabled = true;
             } else {

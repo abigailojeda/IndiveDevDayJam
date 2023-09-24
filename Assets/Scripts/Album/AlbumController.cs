@@ -67,7 +67,8 @@ public class AlbumController : MonoBehaviour
       
         currentPageIndex = Mathf.Clamp(currentPageIndex, 0, pages.Length - 1);
 
-      
+        Debug.Log("pagina: " + currentPageIndex);
+
         pages[currentPageIndex].SetActive(true);
 
    
@@ -86,10 +87,8 @@ public class AlbumController : MonoBehaviour
     {
         // Verifica si ya existe un JSON en PlayerPrefs
         if (PlayerPrefs.GetInt("Initialized") != 1)
-        /* if (true) */
+        //if (true) 
         {
-
-            // Si no existe, inicializa la lista de animales con la propiedad 'photographed' en false
             List<Animal> menuAnimals = new List<Animal>();
             //PAGE 1
             menuAnimals.Add(new Animal("ardilla"));
@@ -119,57 +118,37 @@ public class AlbumController : MonoBehaviour
             menuAnimals.Add(new Animal("stitch"));
             menuAnimals.Add(new Animal("lechuza"));
             menuAnimals.Add(new Animal("polilla"));
+            menuAnimals.Add(new Animal("murcielago"));
 
-            // Crea una instancia de la clase AnimalsData y asigna la lista de animales
             AnimalsData data = new AnimalsData();
             data.animales = menuAnimals;
 
-            Debug.Log("estas intentando guardar: " + data);
+            //Debug.Log("estas intentando guardar: " + data);
 
-            // Convierte la instancia de AnimalsData en JSON y gu�rdala en PlayerPrefs
             string json = JsonUtility.ToJson(data);
             PlayerPrefs.SetString("AnimalsData", json);
             PlayerPrefs.SetInt("Initialized", 1);
             PlayerPrefs.Save();
-  
-        } 
 
+        }
+        else
+        {
         LoadPhotographedObjects();
+        }
+
 
     }
 
 
-    //TO GET PHOTOGRAPHED DATA
-    //public void LoadPhotographedObjects()
-    //{
-    //    if (PlayerPrefs.HasKey("PhotographedObjects"))
-    //    {
-
-    //        string objectsString = PlayerPrefs.GetString("PhotographedObjects");
-
-    //        // Separar el string en partes usando "|" como delimitador
-    //        string[] objectNames = objectsString.Split('|');
-
-    //        // Crear objetos GameObject a partir de los nombres
-    //        foreach (string name in objectNames)
-    //        {
-
-    //            {
-    //                Debug.Log("Objeto encontrado: " + name);
-    //            }
-    //        }
-    //    }
-    //}
-
+ 
 
     public void LoadPhotographedObjects()
     {
         int counter = 0;
-        Debug.Log("SI QUE ENTROOOOOO");
         if (PlayerPrefs.HasKey("AnimalsData"))
         {
             string json = PlayerPrefs.GetString("AnimalsData");
-            Debug.Log("AnimalsData JSON: " + json);
+            //Debug.Log("AnimalsData JSON: " + json);
             AnimalsData data = JsonUtility.FromJson<AnimalsData>(json);
 
             // Itera a trav�s de los animales y activa los sprites correspondientes
@@ -179,6 +158,7 @@ public class AlbumController : MonoBehaviour
                {
                   ActivateAnimalSprite(animal.name);
                   counter++;
+                    Debug.Log("Desde el load" + counter);
                }
             }
             amountCaptured?.Invoke(counter);
@@ -202,7 +182,9 @@ public class AlbumController : MonoBehaviour
                 if (animal.photographed)
                {
                   counter++;
-               }
+                    Debug.Log("Desde photoTaken" + counter);
+
+                }
             }
             amountCaptured?.Invoke(counter);
         }
