@@ -118,7 +118,7 @@ public class AlbumController : MonoBehaviour
             List<Animal> menuAnimals = new List<Animal>();
             //PAGE 1
             menuAnimals.Add(new Animal("ardilla", "Los dientes de las ardillas crecen constantemente durante sus vidas y por eso tienen que morderlo todo, como la cámara de los fotógrafos descuidados"));
-            menuAnimals.Add(new Animal("zorro", "Los zorros son canidos con nariz puntiaguda, patas pequeñas y que cavan hoyos. Todo esto es bien sabidos, la única pregunta es ¿Que dice el zorro?."));
+            menuAnimals.Add(new Animal("zorro", "Los zorros son canidos con nariz puntiaguda, patas pequeñas y que cavan hoyos. Todo esto es bien sabido, la única pregunta es ¿Que dice el zorro?."));
             menuAnimals.Add(new Animal("raton", "Los ratones tienen un muy buen sentido del oído… por si no era obvio. Algunas especies son capaces de usar su cola para agarrarse y balancearse en las ramas de los árboles."));
             menuAnimals.Add(new Animal("mapache", "Los panda rojos o también conocidos como “red pandas”, estan mas cerca de los mapaches que de los pandas. A diferencia de la creencia común, sus emociones no afectan su tamaño."));
             menuAnimals.Add(new Animal("luciernaga", "Las luciérnagas producen luz por tres razones : para atraer pareja, advertir a depredadores y avisar a otras luciérnagas de un peligro. ¿Por que razón habrá brillado las que hemos fotografiado?"));
@@ -139,7 +139,7 @@ public class AlbumController : MonoBehaviour
             //PAGE3
             menuAnimals.Add(new Animal("unicornio", "El unicornio tiene poderes curativos y con su cuerno purificaba las aguas para que otros animales puedan beber"));
             menuAnimals.Add(new Animal("chthulhu", "Lejos de su hábitat normal en las profundidades del mar, los pequeños tulus se acercan a la civilización para causar horrores más allá de la comprensión."));
-            menuAnimals.Add(new Animal("dragon", "Antes de convertirse en grandes reptiles capaces de escupir fuego y aterrorizar montañas, los dragones suelen ser tiernos… Y bastantes fotogenicos."));
+            menuAnimals.Add(new Animal("dragon", "Antes de convertirse en grandes reptiles capaces de escupir fuego y aterrorizar montañas, los dragones suelen ser tiernos… Y bastante fotogenicos."));
             menuAnimals.Add(new Animal("buho", "Majestuosa y enigmática ave, con una capacidad única de girar su cabeza hasta 270 grados lo que le permite buscar presas con precisión, capturando cada detalle en la oscuridad como cual fotografo."));
             menuAnimals.Add(new Animal("stitch", "El Stychicus hawaiano es una extraña criatura omnívora que durante el día duerme en agujeros húmedos y oscuros. Algunos estudios afirman que no es de este planeta."));
             menuAnimals.Add(new Animal("lechuza", "Antiguamente utilizadas para la labor manual de entregar cartas en escuelas de Inglaterra. Las Lechuzas ahora pueden ser encontradas más frecuentemente en su hábitat natural."));

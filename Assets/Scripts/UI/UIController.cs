@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     public Image buttonCameraE;
     public Image buttonCameraClick;
     public Image buttonAlbum;
+    public Image buttonPause;
     public CursorScript cursorScript;
     public TextMeshProUGUI amountText;
     public TextMeshProUGUI endGameAmountText;
@@ -84,6 +85,7 @@ public class UIController : MonoBehaviour
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
         buttonCameraE.enabled = false;
         buttonCameraClick.enabled = false;
+        buttonPause.enabled = false;
         buttonAlbum.enabled = false;
         amountText.gameObject.SetActive(false);
     }
@@ -100,6 +102,7 @@ public class UIController : MonoBehaviour
 
         buttonCameraE.enabled = true;
         buttonCameraClick.enabled = false;
+        buttonPause.enabled = true;
         buttonAlbum.enabled = true;
         amountText.gameObject.SetActive(true);
     }
@@ -116,6 +119,7 @@ public class UIController : MonoBehaviour
 
         buttonCameraE.enabled = false;
         buttonCameraClick.enabled = false;
+        buttonPause.enabled = false;
         buttonAlbum.enabled = false;
         amountText.gameObject.SetActive(false);
     } 
@@ -132,6 +136,7 @@ public class UIController : MonoBehaviour
 
         buttonCameraE.enabled = true;
         buttonCameraClick.enabled = false;
+        buttonPause.enabled = true;
         buttonAlbum.enabled = true;
         amountText.gameObject.SetActive(true);
     }
