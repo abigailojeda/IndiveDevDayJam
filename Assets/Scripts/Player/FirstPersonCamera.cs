@@ -7,12 +7,14 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform player;
     public float mouseSenitivity = 2f;
     float cameraVerticalRotation = 0f;
+    public CursorScript cursorScript;
 
     /* bool lockedCursor = true; */
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
+        cursorScript.hideCursor();
+        /* Cursor.visible = false; */
         Cursor.lockState = CursorLockMode.Locked;
     }
 

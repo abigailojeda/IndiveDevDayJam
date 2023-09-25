@@ -15,7 +15,14 @@ public class MenuActions : MonoBehaviour
     [SerializeField] private Animator cameraAnimator;
     [SerializeField] private Animator textAnimator;
 
+    [SerializeField] CursorScript cursorScript;
+
     public float delayInSeconds = 2.5f;
+
+    private void Start() {
+        cursorScript.showCursor();
+        Cursor.lockState = CursorLockMode.None;
+    }
     public void openAlbum()
     {
         AudioManager.Instance.PlayRandomAlbumPickup();
@@ -38,6 +45,8 @@ public class MenuActions : MonoBehaviour
 
     public void StartGame()
     {
+        cursorScript.hideCursor();
+        Cursor.lockState = CursorLockMode.Locked;
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
         AudioManager.Instance.PlayExtraCameraSFX("StartCamera");
 

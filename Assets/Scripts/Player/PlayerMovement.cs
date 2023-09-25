@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
  
     //public List<Animal> AnimalList = new List<Animal>();
 
+    public CursorScript cursorScript;
     public GridGenerator gridGeneratorScript;
     List<GameObject> pathElements;
     public CameraScript cameraScript;
@@ -67,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void teleportPlayer()
     {
-        AudioManager.Instance.PlayMusic("GameTheme");
+        AudioManager.Instance.PlayMusic("GameTheme50");
         AudioManager.Instance.PlayAmbience("AmbientForestNight");
         blackScreenScript.FadeOut(1f);
         setPathArray();
@@ -128,7 +129,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             updateAnimalsData(animalNames);
-            Cursor.visible = true;
+            cursorScript.showCursor();
+            /* Cursor.visible = true; */
             Cursor.lockState = CursorLockMode.None;
             //Time.timeScale = 1;
 

@@ -13,8 +13,9 @@ public class UIController : MonoBehaviour
     public Image buttonCameraE;
     public Image buttonCameraClick;
     public Image buttonAlbum;
+    public CursorScript cursorScript;
     public TextMeshProUGUI amountText;
-     public TextMeshProUGUI endGameAmountText;
+    public TextMeshProUGUI endGameAmountText;
     public static bool isPaused = false;
     public static bool viewingAlbum = false;
     public static bool inEndGameScreen = false;
@@ -76,7 +77,8 @@ public class UIController : MonoBehaviour
         PlayerMovement.walking = false;
         Time.timeScale = 0;
         isPaused = true;
-        Cursor.visible = true;
+        cursorScript.showCursor();
+        /* Cursor.visible = true; */
         Cursor.lockState = CursorLockMode.None;
         pauseMenu.SetActive(true);
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
@@ -90,7 +92,8 @@ public class UIController : MonoBehaviour
         PlayerMovement.walking = true;
         Time.timeScale = 1;
         isPaused = false;
-        Cursor.visible = false;
+        cursorScript.hideCursor();
+        /* Cursor.visible = false; */
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");
@@ -105,7 +108,8 @@ public class UIController : MonoBehaviour
         PlayerMovement.walking = false;
         Time.timeScale = 0;
         viewingAlbum = true;
-        Cursor.visible = true;
+        cursorScript.showCursor();
+        /* Cursor.visible = true; */
         Cursor.lockState = CursorLockMode.None;
         album.SetActive(true);
         AudioManager.Instance.PlayRandomAlbumPickup();
@@ -121,7 +125,8 @@ public class UIController : MonoBehaviour
         PlayerMovement.walking = true;
         Time.timeScale = 1;
         viewingAlbum = false;
-        Cursor.visible = false;
+        cursorScript.hideCursor();
+        /* Cursor.visible = false; */
         Cursor.lockState = CursorLockMode.Locked;
         album.SetActive(false);
 
@@ -135,7 +140,8 @@ public class UIController : MonoBehaviour
         PlayerMovement.walking = false;
         Time.timeScale = 1;
         isPaused = false;
-        Cursor.visible = true;
+        cursorScript.showCursor();
+        /* Cursor.visible = true; */
         Cursor.lockState = CursorLockMode.None;
         pauseMenu.SetActive(false);
         AudioManager.Instance.PlayExtraCameraSFX("QuitCamera");

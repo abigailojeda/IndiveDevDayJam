@@ -26,6 +26,7 @@ public class CameraScript : MonoBehaviour
     List<GameObject> validTargets = new List<GameObject>();
     private Dictionary<GameObject, bool> anyValidHitDic = new Dictionary<GameObject, bool>();
     public GameObject[] raycasterGrid;
+    public GameObject centerPoint;
     public int rayDistance = 100; // Adjust the distance as needed
     public GameObject visualTestObj;
     public Vector3 boxSize = new Vector3(2f, 2f, 2f);
@@ -65,6 +66,7 @@ public class CameraScript : MonoBehaviour
         {
             anyValidHitDic[caster] = false;
         }
+        anyValidHitDic[centerPoint] = false;
 
     }
 
@@ -99,6 +101,12 @@ public class CameraScript : MonoBehaviour
 
         if (aiming)
         {
+            // Calculate the center point of the screen
+            Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+
+            // Convert screen point to world space
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(screenCenter);
+            makeSingleCast(centerPoint, worldPoint);
             foreach (var caster in raycasterGrid)
             {
                 // Get the GameObject's forward direction
@@ -161,6 +169,35 @@ public class CameraScript : MonoBehaviour
             } else {
                 anyValidHitDic[caster] = false;
             }
+        } else {
+            anyValidHitDic[caster] = false;
+        }
+    }
+    void makeSingleCast(GameObject caster, Vector3 destination)
+    {
+        Camera mainCamera = Camera.main;
+        // Get the mouse position in screen coordinates
+        Vector3 mousePosition = Input.mousePosition;
+
+        // Convert mouse position to world space
+        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCamera.nearClipPlane));
+
+        // Create a ray from camera position to the mouse position
+        Ray ray = new Ray(mainCamera.transform.position, (mouseWorldPosition - mainCamera.transform.position).normalized);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, rayDistance))
+        {
+            GameObject collidedObj = hit.collider.gameObject.transform.parent.gameObject;
+            if (collidedObj.tag == "target")
+                {
+                    anyValidHitDic[caster] = true;
+                    if (!validTargets.Contains(collidedObj))
+                    {
+                        validTargets.Add(collidedObj);
+                    }
+                } else {
+                    anyValidHitDic[caster] = false;
+                }
         } else {
             anyValidHitDic[caster] = false;
         }
